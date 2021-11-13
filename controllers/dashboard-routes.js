@@ -3,7 +3,6 @@ const sequelize = require('../config/connection');
 const { Post, User, Comment } = require('../models');
 const withAuth = require('../utils/auth');
 
-
 //! Get main page
 //* NOTE the MIDDLEWARE CALL 'withAuth' AND visualize the order here.
 router.get('/', withAuth, (req, res) => {
@@ -13,7 +12,7 @@ router.get('/', withAuth, (req, res) => {
       },
       attributes: [
          'id',
-         'post_url',
+         'post_content',
          'title',
          'created_at',
          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
@@ -35,7 +34,7 @@ router.get('/', withAuth, (req, res) => {
    })
       .then(dbPostData => {
          const posts = dbPostData.map(post => post.get({ plain: true })); // serialize data
-         res.render('dashboard', { posts, loggedIn: true, headerBox: 'Message' });
+         res.render('dashboard', { posts, loggedIn: true, headerBox: 'Your Dashboard' });
       })
       .catch(err => {
          console.log(err);
@@ -51,7 +50,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
       },
       attributes: [
          'id',
-         'post_url',
+         'post_content',
          'title',
          'created_at',
          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
@@ -82,6 +81,7 @@ router.get('/edit/:id', withAuth, (req, res) => {
          res.render('edit-post', {
             post,
             loggedIn: req.session.loggedIn,
+            headerBox: 'Your Dashboard'
          });
       })
       .catch(err => {

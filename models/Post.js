@@ -20,7 +20,7 @@ class Post extends Model {
                   },
                   attributes: [
                      'id',
-                     'post_url',
+                     'post_content',
                      'title',
                      'created_at',
                      //! use raw MySQL aggregate function query to get count of how many votes the post has
@@ -51,7 +51,7 @@ Post.init(
          type: DataTypes.STRING,
          allowNull: false,
       },
-      post_url: {
+      post_content: {
          type: DataTypes.STRING,
          allowNull: false,
       },

@@ -26,8 +26,8 @@ const sess = {
    secret: '!lONDHbhXt%$#654jyt',
    // we tell our session to use cookies, additional options, like a maximum age, are added as options to that object.
    cookie: {
-      //! Session expires after 1 min of inactivity.
-      expires: 60000,
+      //! Session expires after 10 min of inactivity.
+      // expires: 600000,
    },
    resave: false, // use false always
    saveUninitialized: true,
@@ -38,6 +38,7 @@ const sess = {
 
 //! handlebars setup
 const exphbs = require('express-handlebars'); // import express-handlebars
+const { schema } = require('./models/User');
 const hbs = exphbs.create({ helpers }); // instantiate express-handlebars object
 app.engine('handlebars', hbs.engine); // sets express engine 'handlebars' from handlebars' engine
 app.set('view engine', 'handlebars'); // sets 'view engine' from app.engine

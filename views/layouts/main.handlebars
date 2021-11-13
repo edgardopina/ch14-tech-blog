@@ -14,15 +14,16 @@
                {{#unless loggedIn}}
                   <a class='nav-list' href='/login'>Login</a>
                {{/unless}}
-               <a id='logout' class='nav-list' href='/'>Logout</a>
-               {{!-- <a class='nav-list' href='/logout'>Logout</a> --}}
-               {{!-- <button id='logout'>Logout</button>  --}}
+                  <a id='logout' class='nav-list' href='/login'>Logout</a>
             </div>
             <div class='headerBox-cont'>
-               <h4 class='headerBox'>The Tech Blog</h4>
+               {{#if loggedIn}}
+                  <h4 class='headerBox'>{{headerBox}}</h4>
+               {{else}}
+                  <h4 class='headerBox'>The Tech Blog</h4>
+               {{/if}}
             </div>
          </header>
-         {{!-- {{headerBox}} --}}
          <main>
             {{{body}}}
          </main>

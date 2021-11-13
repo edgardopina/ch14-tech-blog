@@ -62,8 +62,14 @@ input:focus {
 }
 
 textarea {
-   min-width: 40%;
-   min-height: 100px;
+   width: 95%;
+   min-height: 80px;
+   resize: none;
+}
+
+textarea .post-title {
+   width: 95%;
+   min-height: 15px;
 }
 
 form > div {
@@ -203,7 +209,8 @@ main {
 }
 
 .new-post-form input {
-   width: 300px;
+   /* width: 300px; */
+   width: 95%;
 }
 
 .edit-post-form {

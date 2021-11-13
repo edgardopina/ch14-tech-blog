@@ -2,16 +2,14 @@ async function signupFormHandler(event) {
    event.preventDefault();
 
    const username = document.querySelector('#username-signup').value.trim();
-   const email = document.querySelector('#email-signup').value.trim();
    const password = document.querySelector('#password-signup').value.trim();
    
-   if (username && email && password) {
+   if (username && password) {
       // POST request to /api/users to CREATE AN USER
       const response = await fetch('/api/users', {
          method: 'post',
          body: JSON.stringify({
             username,
-            email,
             password,
          }),
          headers: {
@@ -31,16 +29,14 @@ async function signupInstead(event) {
    event.preventDefault();
 
    const username = document.querySelector('#username-signup').value.trim();
-   const email = document.querySelector('#email-signup').value.trim();
    const password = document.querySelector('#password-signup').value.trim();
    
-   if (username && email && password) {
+   if (username && password) {
       // POST request to /api/users to CREATE AN USER
       const response = await fetch('/api/users', {
          method: 'post',
          body: JSON.stringify({
             username,
-            email,
             password,
          }),
          headers: {

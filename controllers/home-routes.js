@@ -14,7 +14,7 @@ router.get('/', (req, res) => {
    Post.findAll({
       attributes: [
          'id',
-         'post_url',
+         'post_content',
          'title',
          'created_at',
          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
@@ -42,6 +42,7 @@ router.get('/', (req, res) => {
          res.render('homepage', {
             posts,
             loggedIn: req.session.loggedIn,
+            headerBox: 'The Tech Blog'
          });
       })
       .catch(err => {
@@ -59,7 +60,6 @@ router.get('/login', (req, res) => {
    res.render('login'); // we do not need any variables to pass as variables in 2nd parameter
 });
 
-
 //! renders sign-up page
 router.get('/signup', (req, res) => {
    if (req.session.loggedIn) {
@@ -69,7 +69,6 @@ router.get('/signup', (req, res) => {
    res.render('signup'); // we do not need any variables to pass as variables in 2nd parameter
 });
 
-
 //! GET one post
 router.get('/post/:id', (req, res) => {
    Post.findOne({
@@ -78,7 +77,7 @@ router.get('/post/:id', (req, res) => {
       },
       attributes: [
          'id',
-         'post_url',
+         'post_content',
          'title',
          'created_at',
          [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
