@@ -12,13 +12,7 @@ router.get('/', (req, res) => {
    //* res.render('homepage');
 
    Post.findAll({
-      attributes: [
-         'id',
-         'post_content',
-         'title',
-         'created_at',
-         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
-      ],
+      attributes: ['id', 'post_content', 'title', 'created_at'],
       include: [
          {
             model: Comment,
@@ -42,7 +36,7 @@ router.get('/', (req, res) => {
          res.render('homepage', {
             posts,
             loggedIn: req.session.loggedIn,
-            headerBox: 'The Tech Blog'
+            headerBox: 'The Tech Blog',
          });
       })
       .catch(err => {
@@ -75,13 +69,7 @@ router.get('/post/:id', (req, res) => {
       where: {
          id: req.params.id,
       },
-      attributes: [
-         'id',
-         'post_content',
-         'title',
-         'created_at',
-         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
-      ],
+      attributes: ['id', 'post_content', 'title', 'created_at'],
       include: [
          {
             model: Comment,
@@ -108,6 +96,7 @@ router.get('/post/:id', (req, res) => {
          res.render('single-post', {
             post,
             loggedIn: req.session.loggedIn,
+            headerBox: 'The Tech Blog',
          });
       })
       .catch(err => {

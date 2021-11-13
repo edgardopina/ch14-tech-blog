@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const sequelize = require('../../config/connection');
-const { User, Post, Vote, Comment } = require('../../models');
+const { User, Post, Comment } = require('../../models');
 const withAuth = require('../../utils/auth');
 
 // GET /api/posts - GET ALL POSTS
@@ -11,8 +11,6 @@ router.get('/', (req, res) => {
          'post_content',
          'title',
          'created_at',
-         //! add count of votes per post
-         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
       ],
       order: [['created_at', 'DESC']], // NEWEST POSTS AT THE TOP
       //! this include is a LEFT OUTER JOIN, it joins post with comment
@@ -51,10 +49,6 @@ router.get('/:id', (req, res) => {
          'post_comntent ',
          'title',
          'created_at',
-         /*
-         ! add count of votes per post         
-         */
-         [sequelize.literal('(SELECT COUNT(*) FROM vote WHERE post.id = vote.post_id)'), 'vote_count'],
       ],
       include: [
          {
@@ -98,23 +92,6 @@ router.post('/', withAuth, (req, res) => {
       });
 });
 
-// PUT /api/posts/upvote - VOTE ON A POST
-//! when we vote on a post, we are technically uopdating the post's data
-//! THIS ROUTE MUST BE PLACED BEFORE THE '/:id' ROUTE BELOW, OTHERWISE, EXPRESS.JS WILL THINK THAT THE
-//! WORD 'upvote' IS A VALID PARAMETER FOR '/:id'
-router.put('/upvote', withAuth, (req, res) => {
-   // make sure that the session exists first, then if a session does exist, we're using the saved user_id
-   // property on the session to insert a new record in the vote table.
-   if (req.session) {
-      //pass session id along with all destructured properties on req.body to static function upvote
-      Post.upvote({ ...req.body, user_id: req.session.user_id }, { Vote, Comment, User })
-         .then(updatedVoteData => res.json(updatedVoteData))
-         .catch(err => {
-            console.log(err);
-            res.status(500).json(err);
-         });
-   }
-});
 
 // PUT /api/posts/1 - UPDATE ONE POST
 router.put('/:id', withAuth, (req, res) => {
