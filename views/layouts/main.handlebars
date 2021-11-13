@@ -1,0 +1,37 @@
+<html LANG='en'>
+   <head>
+      <meta charset='UTF-8' />
+      <meta name='viewport' content='width=device-width, initial-scale=1.0' />
+      <title>Tech Blog</title>
+      <link rel='stylesheet' href='/stylesheets/style.css' />
+   </head>
+   <body>
+      <div class='wrapper'>
+         <header>
+            <div class='new-menu'>
+               <a class='nav-list' href='/'>Home</a>
+               <a class='nav-list' href='/dashboard'>Dashboard</a>
+               {{#unless loggedIn}}
+                  <a class='nav-list' href='/login'>Login</a>
+               {{/unless}}
+               <a id='logout' class='nav-list' href='/'>Logout</a>
+               {{!-- <a class='nav-list' href='/logout'>Logout</a> --}}
+               {{!-- <button id='logout'>Logout</button>  --}}
+            </div>
+            <div class='headerBox-cont'>
+               <h4 class='headerBox'>The Tech Blog</h4>
+            </div>
+         </header>
+         {{!-- {{headerBox}} --}}
+         <main>
+            {{{body}}}
+         </main>
+         <footer>
+            Thanks for visiting!
+         </footer>
+      </div>
+      {{#if loggedIn}}
+         <script src='/javascript/logout.js'></script>
+      {{/if}}
+   </body>
+</html>
